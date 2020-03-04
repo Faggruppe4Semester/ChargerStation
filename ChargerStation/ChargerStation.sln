@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChargerStationLib", "ChargerStationLib\ChargerStationLib.csproj", "{8BEE11EE-37B3-448A-8A04-053D73A536B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChargerStation", "ChargerStation\ChargerStation.csproj", "{36C101DF-A03F-4A6D-9D4E-9DE3098B62BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChargerStationTest", "ChargerStationTest\ChargerStationTest.csproj", "{9569ACBC-3D0C-4259-874D-9E61AACBB1E8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8BEE11EE-37B3-448A-8A04-053D73A536B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BEE11EE-37B3-448A-8A04-053D73A536B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BEE11EE-37B3-448A-8A04-053D73A536B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BEE11EE-37B3-448A-8A04-053D73A536B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36C101DF-A03F-4A6D-9D4E-9DE3098B62BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36C101DF-A03F-4A6D-9D4E-9DE3098B62BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36C101DF-A03F-4A6D-9D4E-9DE3098B62BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36C101DF-A03F-4A6D-9D4E-9DE3098B62BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9569ACBC-3D0C-4259-874D-9E61AACBB1E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9569ACBC-3D0C-4259-874D-9E61AACBB1E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9569ACBC-3D0C-4259-874D-9E61AACBB1E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9569ACBC-3D0C-4259-874D-9E61AACBB1E8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
