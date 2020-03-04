@@ -13,14 +13,18 @@ namespace ChargerStation
             DoorOpen
         };
 
-        // Her mangler flere member variable
         private LadeskabState _state;
         private IUsbCharger _charger;
+        private IDoor _door;
         private int _oldId;
 
         private string logFile = "logfile.txt"; // Navnet på systemets log-fil
 
-        // Her mangler constructor
+        public StationControl()
+        {
+            _door = new Door();
+            _charger = new UsbCharger();
+        }
 
         // Eksempel på event handler for eventet "RFID Detected" fra tilstandsdiagrammet for klassen
         private void RfidDetected(int id)
@@ -76,6 +80,15 @@ namespace ChargerStation
             }
         }
 
+        void CheckID(int oldID, int ID)
+        {
+            
+        }
+        
         // Her mangler de andre trigger handlere
+        void DoorOpened(object source, EventArgs e)
+        {
+            
+        }
     }
 }

@@ -25,8 +25,19 @@ namespace ChargerStation
         void StopCharge();
     }
 
-    public class UsbCharger
+    public class UsbCharger : IUsbCharger
     {
-        
+        public event EventHandler<CurrentEventArgs> CurrentValueEvent;
+        public double CurrentValue { get; }
+        public bool Connected { get; }
+        public void StartCharge()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void StopCharge()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
