@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 
 namespace ChargerStation
@@ -16,14 +17,20 @@ namespace ChargerStation
         private LadeskabState _state;
         private IUsbCharger _charger;
         private IDoor _door;
+        private IDisplay _display;
+        private RfIdReader _rfIdReader;
         private int _oldId;
 
         private string logFile = "logfile.txt"; // Navnet på systemets log-fil
 
-        public StationControl()
+        public StationControl(IDoor door, IUsbCharger usbCharger, RfIdReader rfIdReader)
         {
-            _door = new Door();
-            _charger = new UsbCharger();
+            _door = door;
+            _charger = usbCharger;
+            _rfIdReader = rfIdReader;
+            _display = new Display();
+            _door.DoorStateChangedEvent += HandleDoorStateChangedEvent;
+              
         }
 
         // Eksempel på event handler for eventet "RFID Detected" fra tilstandsdiagrammet for klassen
@@ -35,7 +42,7 @@ namespace ChargerStation
                     // Check for ladeforbindelse
                     if (_charger.Connected)
                     {
-                        _door.LockDoor();
+                        _door.DoorClosed();
                         _charger.StartCharge();
                         _oldId = id;
                         using (var writer = File.AppendText(logFile))
@@ -62,7 +69,7 @@ namespace ChargerStation
                     if (id == _oldId)
                     {
                         _charger.StopCharge();
-                        _door.UnlockDoor();
+                        _door.DoorOpen();
                         using (var writer = File.AppendText(logFile))
                         {
                             writer.WriteLine(DateTime.Now + ": Skab låst op med RFID: {0}", id);
@@ -86,9 +93,26 @@ namespace ChargerStation
         }
         
         // Her mangler de andre trigger handlere
-        void DoorOpened(object source, EventArgs e)
+        void HandleDoorStateChangedEvent(object source, EventArgs e)
         {
-            
+            switch (_state)
+            {
+                case LadeskabState.Available:
+                {
+                    _display.DisplayMessage("Tilslut telefon");
+                    break;
+                }
+                case LadeskabState.Locked:
+                {
+                    break;
+                }
+                case LadeskabState.DoorOpen:
+                {
+                    break;
+                }
+                default: 
+                    break;
+            }
         }
     }
 }

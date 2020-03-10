@@ -21,6 +21,7 @@
         <e p="ChargerControl.cs" t="Include" />
         <e p="ChargerStationLib.csproj" t="IncludeRecursive" />
         <e p="Door.cs" t="Include" />
+        <e p="IDisplay.cs" t="Include" />
         <e p="LogFile.cs" t="Include" />
         <e p="obj" t="ExcludeRecursive" />
         <e p="Properties" t="Include">
@@ -34,6 +35,7 @@
         <e p="bin" t="ExcludeRecursive" />
         <e p="ChargerStationTest.csproj" t="IncludeRecursive" />
         <e p="obj" t="ExcludeRecursive" />
+        <e p="packages.config" t="Include" />
         <e p="Properties" t="Include">
           <e p="AssemblyInfo.cs" t="Include" />
         </e>
