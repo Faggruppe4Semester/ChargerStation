@@ -4,8 +4,14 @@ using NUnit.Framework;
 namespace ChargerStationTest
 {
     [TestFixture]
-    public class Tests
+    public class StationControlTests
     {
+
+        [SetUp]
+        public void SetUp()
+        {
+
+        }
         [Test]
         public void Test1()
         {
