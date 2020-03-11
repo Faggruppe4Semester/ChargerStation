@@ -8,6 +8,7 @@ namespace ChargerStation
     }
     public interface IDoor
     {
+        DoorState State { get; set; }
         event EventHandler<DoorStateChangedEventArgs> DoorStateChangedEvent; 
         void DoorClosed();
         void DoorOpen();
@@ -15,6 +16,7 @@ namespace ChargerStation
     
     public class Door : IDoor
     {
+        public DoorState State { get; set; }
         public event EventHandler<DoorStateChangedEventArgs> DoorStateChangedEvent;
         protected virtual void OnDoorStateChanged(DoorStateChangedEventArgs e)
         {
