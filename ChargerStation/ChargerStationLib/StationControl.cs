@@ -19,18 +19,19 @@ namespace ChargerStation
         private IDoor _door;
         private IDisplay _display;
         private IRfIdReader _rfIdReader;
+        private Ilog _log;
         private int _oldId;
-
-        private string logFile = "logfile.txt"; // Navnet på systemets log-fil
-
+        
         public StationControl(IDoor door, IUsbCharger usbCharger, IRfIdReader rfIdReader)
         {
             _door = door;
             _charger = usbCharger;
             _rfIdReader = rfIdReader;
             _display = new Display();
+            _log = new LogFile();
             _door.DoorStateChangedEvent += HandleDoorStateChangedEvent;
-              
+            _rfIdReader.RfIdDetectedEvent += HandleRfidDetectedEvent;
+
         }
 
         // Eksempel på event handler for eventet "RFID Detected" fra tilstandsdiagrammet for klassen
@@ -45,7 +46,7 @@ namespace ChargerStation
                         _oldId = id;
                         _state = LadeskabState.Locked;
                         _charger.StartCharge();
-                        // Do log
+                        _log.LogDoorLocked(id);
                         _display.DisplayMessage("Ladeskab optaget");
                     }
                     else
@@ -68,12 +69,18 @@ namespace ChargerStation
                     {
                         _charger.StopCharge();
                         _state = LadeskabState.Available;
-                        // Log
+                        _log.LogDoorUnlocked(id);
                         _display.DisplayMessage("Fjern telefon");
                     }
 
                     break;
             }
+        }
+
+        void HandleRfidDetectedEvent(object source, EventArgs e)
+        {
+            RfIdEventArgs args = (RfIdEventArgs) e;
+            RfidDetected(args.Id);
         }
         
         // Her mangler de andre trigger handlere
