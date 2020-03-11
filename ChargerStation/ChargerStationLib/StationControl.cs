@@ -42,22 +42,16 @@ namespace ChargerStation
                     // Check for ladeforbindelse
                     if (_charger.Connected)
                     {
-                        _door.DoorClosed();
-                        _charger.StartCharge();
                         _oldId = id;
-                        using (var writer = File.AppendText(logFile))
-                        {
-                            writer.WriteLine(DateTime.Now + ": Skab låst med RFID: {0}", id);
-                        }
-
-                        Console.WriteLine("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.");
                         _state = LadeskabState.Locked;
+                        _charger.StartCharge();
+                        // Do log
+                        _display.DisplayMessage("Ladeskab optaget");
                     }
                     else
                     {
-                        Console.WriteLine("Din telefon er ikke ordentlig tilsluttet. Prøv igen.");
+                      _display.DisplayMessage("Tilslutningsfejl");  
                     }
-
                     break;
 
                 case LadeskabState.DoorOpen:
@@ -66,36 +60,37 @@ namespace ChargerStation
 
                 case LadeskabState.Locked:
                     // Check for correct ID
-                    if (id == _oldId)
+                    if (id != _oldId)
                     {
-                        _charger.StopCharge();
-                        _door.DoorOpen();
-                        using (var writer = File.AppendText(logFile))
-                        {
-                            writer.WriteLine(DateTime.Now + ": Skab låst op med RFID: {0}", id);
-                        }
-
-                        Console.WriteLine("Tag din telefon ud af skabet og luk døren");
-                        _state = LadeskabState.Available;
+                        _display.DisplayMessage("Forkert RFID");
                     }
                     else
                     {
-                        Console.WriteLine("Forkert RFID tag");
+                        _charger.StopCharge();
+                        _state = LadeskabState.Available;
+                        // Log
+                        _display.DisplayMessage("Fjern telefon");
                     }
 
                     break;
             }
         }
-
-        void CheckID(int oldID, int ID)
-        {
-            
-        }
         
         // Her mangler de andre trigger handlere
         void HandleDoorStateChangedEvent(object source, EventArgs e)
         {
-            
+            DoorStateChangedEventArgs args = (DoorStateChangedEventArgs)e;
+            if (args.State == DoorState.Open)
+            {
+                _display.DisplayMessage("Tilslut telefon");
+                _state = LadeskabState.DoorOpen;
+            }
+
+            if (args.State == DoorState.Closed)
+            {
+                _display.DisplayMessage("Indlæs RFID");
+                _state = LadeskabState.Available;
+            }
         }
     }
 }
