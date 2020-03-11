@@ -1,7 +1,7 @@
 ﻿using System;
 using ChargerStation;
+using NSubstitute;
 using NUnit.Framework;
-
 
 
 namespace ChargerStationTest
@@ -17,7 +17,7 @@ namespace ChargerStationTest
         [SetUp]
         public void SetUp()
         {
-            _door = Substitude.For<IDoor>();
+            _door = Substitute.For<IDoor>();
         }
         [Test]
         public void Test1()
