@@ -18,12 +18,12 @@ namespace ChargerStation
         private IUsbCharger _charger;
         private IDoor _door;
         private IDisplay _display;
-        private RfIdReader _rfIdReader;
+        private IRfIdReader _rfIdReader;
         private int _oldId;
 
         private string logFile = "logfile.txt"; // Navnet på systemets log-fil
 
-        public StationControl(IDoor door, IUsbCharger usbCharger, RfIdReader rfIdReader)
+        public StationControl(IDoor door, IUsbCharger usbCharger, IRfIdReader rfIdReader)
         {
             _door = door;
             _charger = usbCharger;
@@ -95,24 +95,7 @@ namespace ChargerStation
         // Her mangler de andre trigger handlere
         void HandleDoorStateChangedEvent(object source, EventArgs e)
         {
-            switch (_state)
-            {
-                case LadeskabState.Available:
-                {
-                    _display.DisplayMessage("Tilslut telefon");
-                    break;
-                }
-                case LadeskabState.Locked:
-                {
-                    break;
-                }
-                case LadeskabState.DoorOpen:
-                {
-                    break;
-                }
-                default: 
-                    break;
-            }
+            
         }
     }
 }
