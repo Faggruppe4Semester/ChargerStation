@@ -30,6 +30,13 @@ namespace ChargerStation
         public event EventHandler<CurrentEventArgs> CurrentValueEvent;
         public double CurrentValue { get; }
         public bool Connected { get; }
+
+
+        protected virtual void onCurrentChanged(CurrentEventArgs e)
+        {
+            CurrentValueEvent?.Invoke(this, e);
+        }
+
         public void StartCharge()
         {
             throw new NotImplementedException();
