@@ -1,9 +1,16 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.CompilerServices;
 
 namespace ChargerStation
 {
-    public class LogFile
+
+    public interface Ilog
+    {
+        void LogDoorLocked(int LockID);
+        void LogDoorUnlocked(int LockID);
+    }
+    public class LogFile : Ilog
     {
         public void LogDoorLocked(int LockID)
         {
