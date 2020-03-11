@@ -4,8 +4,10 @@
     {
         public static void Main(string[] args)
         {
-            IDoor d = new Door();
-            StationControl sc = new StationControl(d);
+            IDoor door = new Door();
+            IUsbCharger usb = new UsbCharger();
+            IRfIdReader rfid = new RfIdReader();
+            StationControl sc = new StationControl(door, usb, rfid);
         }
     }
 }
