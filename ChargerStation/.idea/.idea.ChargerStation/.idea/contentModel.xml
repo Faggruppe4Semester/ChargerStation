@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\TCLaptop\.Rider2019.3\config\consoles\db" t="IncludeRecursive" />
-    <e p="C:\Users\TCLaptop\.Rider2019.3\config\extensions" t="IncludeRecursive" />
-    <e p="C:\Users\TCLaptop\.Rider2019.3\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\TCLaptop\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_ChargerStation.-589471182.00" t="ExcludeRecursive" />
-    <e p="C:\Users\TCLaptop\RiderProjects\ChargerStation\ChargerStation" t="IncludeFlat">
+    <e p="C:\Users\marku\.Rider2019.3\config\consoles\db" t="IncludeRecursive" />
+    <e p="C:\Users\marku\.Rider2019.3\config\consoles\ide" t="IncludeRecursive" />
+    <e p="C:\Users\marku\.Rider2019.3\config\extensions" t="IncludeRecursive" />
+    <e p="C:\Users\marku\.Rider2019.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\marku\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_ChargerStation.-335272666.00" t="ExcludeRecursive" />
+    <e p="D:\Programmer\JetBrains\projects\ChargerStation\ChargerStation" t="IncludeFlat">
       <e p="ChargerStation" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
         <e p="ChargerStation.csproj" t="IncludeRecursive" />
         <e p="obj" t="ExcludeRecursive" />
+        <e p="packages.config" t="Include" />
         <e p="Program.cs" t="Include" />
         <e p="Properties" t="Include">
           <e p="AssemblyInfo.cs" t="Include" />
@@ -24,6 +26,7 @@
         <e p="IDisplay.cs" t="Include" />
         <e p="LogFile.cs" t="Include" />
         <e p="obj" t="ExcludeRecursive" />
+        <e p="packages.config" t="Include" />
         <e p="Properties" t="Include">
           <e p="AssemblyInfo.cs" t="Include" />
         </e>
