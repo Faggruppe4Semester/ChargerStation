@@ -15,23 +15,22 @@ namespace ChargerStation
         };
 
         private LadeskabState _state;
-        private IUsbCharger _charger;
+        private IChargerControl _chargeControl;
         private IDoor _door;
         private IDisplay _display;
         private IRfIdReader _rfIdReader;
         private Ilog _log;
         private int _oldId;
         
-        public StationControl(IDoor door, IUsbCharger usbCharger, IRfIdReader rfIdReader)
+        public StationControl(IDoor door, IChargerControl chargeControl, IRfIdReader rfIdReader)
         {
             _door = door;
-            _charger = usbCharger;
+            _chargeControl = chargeControl;
             _rfIdReader = rfIdReader;
             _display = new Display();
             _log = new LogFile();
             _door.DoorStateChangedEvent += HandleDoorStateChangedEvent;
             _rfIdReader.RfIdDetectedEvent += HandleRfidDetectedEvent;
-
         }
 
         // Eksempel på event handler for eventet "RFID Detected" fra tilstandsdiagrammet for klassen
@@ -41,11 +40,11 @@ namespace ChargerStation
             {
                 case LadeskabState.Available:
                     // Check for ladeforbindelse
-                    if (_charger.Connected)
+                    if (_chargeControl.IsConnected())
                     {
                         _oldId = id;
                         _state = LadeskabState.Locked;
-                        _charger.StartCharge();
+                        _chargeControl.StartCharge();
                         _log.LogDoorLocked(id);
                         _display.DisplayMessage("Ladeskab optaget");
                     }
@@ -67,7 +66,7 @@ namespace ChargerStation
                     }
                     else
                     {
-                        _charger.StopCharge();
+                        _chargeControl.StopCharge();
                         _state = LadeskabState.Available;
                         _log.LogDoorUnlocked(id);
                         _display.DisplayMessage("Fjern telefon");

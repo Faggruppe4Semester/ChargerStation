@@ -1,6 +1,6 @@
 ﻿namespace ChargerStation
 {
-    interface IChargerControl
+    public interface IChargerControl
     {
         bool IsConnected();
         void StartCharge();
@@ -9,6 +9,11 @@
     
     public class ChargerControl : IChargerControl
     {
+        private IUsbCharger _usbCharger;
+        public ChargerControl(IUsbCharger usb)
+        {
+            _usbCharger = usb;
+        }
         public bool IsConnected()
         {
             return false;
