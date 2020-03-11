@@ -29,5 +29,12 @@ namespace ChargerStationTest
         {
             Assert.True(true);
         }
+
+        [Test]
+        public void QuickTest()
+        {
+            _idReader.Detect(5);
+            
+        }
     }
 }
