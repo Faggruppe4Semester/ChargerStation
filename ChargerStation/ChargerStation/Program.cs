@@ -8,6 +8,9 @@
             IChargerControl c = new ChargerControl(new UsbChargerSimulator());
             IRfIdReader rfid = new RfIdReader();
             StationControl sc = new StationControl(door, c, rfid);
+            //TODO: Eventhandleing in chargercontol
+            //TODO: Display needs updating
+            //TODO: TESTING TESTING TESTING
         }
     }
 }
