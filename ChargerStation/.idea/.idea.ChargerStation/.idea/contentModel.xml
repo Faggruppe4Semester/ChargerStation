@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\marku\.Rider2019.3\config\consoles\db" t="IncludeRecursive" />
-    <e p="C:\Users\marku\.Rider2019.3\config\consoles\ide" t="IncludeRecursive" />
-    <e p="C:\Users\marku\.Rider2019.3\config\extensions" t="IncludeRecursive" />
-    <e p="C:\Users\marku\.Rider2019.3\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\marku\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_ChargerStation.-335272666.00" t="ExcludeRecursive" />
-    <e p="D:\Programmer\JetBrains\projects\ChargerStation\ChargerStation" t="IncludeFlat">
+    <e p="C:\Users\TCLaptop\.Rider2019.3\config\consoles\db" t="IncludeRecursive" />
+    <e p="C:\Users\TCLaptop\.Rider2019.3\config\extensions" t="IncludeRecursive" />
+    <e p="C:\Users\TCLaptop\.Rider2019.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\TCLaptop\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_ChargerStation.-589471182.00" t="ExcludeRecursive" />
+    <e p="C:\Users\TCLaptop\RiderProjects\ChargerStation\ChargerStation" t="IncludeFlat">
       <e p="ChargerStation" t="IncludeRecursive">
         <e p="bin" t="ExcludeRecursive" />
         <e p="ChargerStation.csproj" t="IncludeRecursive" />
@@ -24,6 +23,7 @@
         <e p="ChargerStationLib.csproj" t="IncludeRecursive" />
         <e p="Door.cs" t="Include" />
         <e p="IDisplay.cs" t="Include" />
+        <e p="IUsbCharger.cs" t="Include" />
         <e p="LogFile.cs" t="Include" />
         <e p="obj" t="ExcludeRecursive" />
         <e p="packages.config" t="Include" />
@@ -32,9 +32,10 @@
         </e>
         <e p="RFIDReader.cs" t="Include" />
         <e p="StationControl.cs" t="Include" />
-        <e p="USBCharger.cs" t="Include" />
+        <e p="UsbChargerSimulator.cs" t="Include" />
       </e>
       <e p="ChargerStationTest" t="IncludeRecursive">
+        <e p="app.config" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
         <e p="ChargerStationTest.csproj" t="IncludeRecursive" />
         <e p="obj" t="ExcludeRecursive" />

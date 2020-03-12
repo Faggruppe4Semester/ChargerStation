@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ChargerStation
+namespace UsbSimulator
 {
     public class CurrentEventArgs : EventArgs
     {
@@ -23,28 +23,5 @@ namespace ChargerStation
         void StartCharge();
         // Stop charging
         void StopCharge();
-    }
-
-    public class UsbCharger : IUsbCharger
-    {
-        public event EventHandler<CurrentEventArgs> CurrentValueEvent;
-        public double CurrentValue { get; }
-        public bool Connected { get; }
-
-
-        protected virtual void onCurrentChanged(CurrentEventArgs e)
-        {
-            CurrentValueEvent?.Invoke(this, e);
-        }
-
-        public void StartCharge()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void StopCharge()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

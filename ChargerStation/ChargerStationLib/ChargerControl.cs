@@ -1,4 +1,6 @@
-﻿namespace ChargerStation
+﻿using UsbSimulator;
+
+namespace ChargerStation
 {
     public interface IChargerControl
     {
@@ -21,12 +23,12 @@
 
         public void StartCharge()
         {
-            
+            _usbCharger.StartCharge();
         }
 
         public void StopCharge()
         {
-            
+            _usbCharger.StopCharge();
         }
     }
 }
