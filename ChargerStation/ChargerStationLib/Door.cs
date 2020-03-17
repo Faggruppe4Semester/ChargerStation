@@ -24,10 +24,12 @@ namespace ChargerStation
         }
         public void DoorClosed()
         {
+            State = DoorState.Closed;
             OnDoorStateChanged(new DoorStateChangedEventArgs{ State = DoorState.Closed});
         }
         public void DoorOpen()
         {
+            State = DoorState.Open;
             OnDoorStateChanged(new DoorStateChangedEventArgs{ State = DoorState.Open});
         }
     }
