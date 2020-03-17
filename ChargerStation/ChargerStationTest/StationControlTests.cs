@@ -31,10 +31,11 @@ namespace ChargerStationTest
         }
 
         [Test]
-        public void QuickTest()
+        public void IDDetected_ChargingTrue_DoorLocked()
         {
-            _idReader.Detect(5);
-            
+            _chargerControl.IsConnected().Returns(true);
+            _idReader.RfIdDetectedEvent += Raise.EventWith(new RfIdEventArgs {Id = 123});
+            Assert.That(_uut._state, Is.EqualTo(StationControl.LadeskabState.Locked));
         }
     }
 }
