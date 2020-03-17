@@ -24,18 +24,31 @@ namespace ChargerStationTest
             _uut = new StationControl(_door, _chargerControl, _idReader);
 
         }
+      
         [Test]
-        public void Test1()
-        {
-            Assert.True(true);
-        }
-
-        [Test]
-        public void IDDetected_ChargingTrue_DoorLocked()
+        public void IDDetected_ChargingTrue_StateLocked()
         {
             _chargerControl.IsConnected().Returns(true);
             _idReader.RfIdDetectedEvent += Raise.EventWith(new RfIdEventArgs {Id = 123});
+            //_idReader.Detect(123);
             Assert.That(_uut._state, Is.EqualTo(StationControl.LadeskabState.Locked));
+        }
+
+        [Test]
+        public void IDDetected_ChargingFalse_StateAvaliable()
+        {
+            _chargerControl.IsConnected().Returns(false);
+            _idReader.RfIdDetectedEvent += Raise.EventWith(new RfIdEventArgs{Id = 123});
+            Assert.That(_uut._state,Is.EqualTo(StationControl.LadeskabState.Available));
+        }
+
+        [Test]
+        public void IDDetected_CorrectId_StateAvaliable()
+        {
+            _chargerControl.IsConnected().Returns(false);
+            _idReader.RfIdDetectedEvent += Raise.EventWith(new RfIdEventArgs { Id = 123 }); //Lås skab
+            _idReader.RfIdDetectedEvent += Raise.EventWith(new RfIdEventArgs { Id = 123 }); //Forsøg at låse op
+            Assert.That(_uut._state,Is.EqualTo(StationControl.LadeskabState.Available));
         }
     }
 }

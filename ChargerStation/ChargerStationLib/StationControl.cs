@@ -51,7 +51,7 @@ namespace ChargerStation
                     }
                     else
                     {
-                      _display.DisplayMessage("Tilslutningsfejl");  
+                      _display.DisplayMessage("Tilslutningsfejl");      
                     }
                     break;
 
