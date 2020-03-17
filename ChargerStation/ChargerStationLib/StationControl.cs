@@ -7,14 +7,14 @@ namespace ChargerStation
     public class StationControl
     {
         // Enum med tilstande ("states") svarende til tilstandsdiagrammet for klassen
-        private enum LadeskabState
+        public enum LadeskabState
         {
             Available,
             Locked,
             DoorOpen
         };
 
-        private LadeskabState _state;
+        public LadeskabState _state;
         private IChargerControl _chargeControl;
         private IDoor _door;
         private IDisplay _display;
@@ -29,6 +29,7 @@ namespace ChargerStation
             _rfIdReader = rfIdReader;
             _display = new Display();
             _log = new LogFile();
+            _state = LadeskabState.Available;
             _door.DoorStateChangedEvent += HandleDoorStateChangedEvent;
             _rfIdReader.RfIdDetectedEvent += HandleRfidDetectedEvent;
         }
@@ -50,7 +51,7 @@ namespace ChargerStation
                     }
                     else
                     {
-                      _display.DisplayMessage("Tilslutningsfejl");  
+                      _display.DisplayMessage("Tilslutningsfejl");      
                     }
                     break;
 
