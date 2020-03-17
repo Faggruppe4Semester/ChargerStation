@@ -74,5 +74,12 @@ namespace ChargerStationTest
             _idReader.RfIdDetectedEvent += Raise.EventWith(new RfIdEventArgs{Id = 123});
             Assert.That(_uut._state, Is.EqualTo(StationControl.LadeskabState.DoorOpen));
         }
+
+        [Test]
+        public void DoorClosed_StateAvaiable()
+        {
+            _door.DoorStateChangedEvent += Raise.EventWith(new DoorStateChangedEventArgs { State = DoorState.Closed });
+            Assert.That(_uut._state,Is.EqualTo(StationControl.LadeskabState.Available));
+        }
     }
 }
