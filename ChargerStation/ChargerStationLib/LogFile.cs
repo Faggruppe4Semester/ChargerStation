@@ -19,6 +19,7 @@ namespace ChargerStation
             W.WriteLine($"{DateTime.Now.ToLongTimeString()} {DateTime.Now.ToLongDateString()}");
             W.WriteLine($"Charging station locked using RFID: {LockID}");
             W.WriteLine("-------------------------------------------------------");
+            W.Close();
         }
 
         public void LogDoorUnlocked(int LockID)
@@ -28,6 +29,7 @@ namespace ChargerStation
             W.WriteLine($"{DateTime.Now.ToLongTimeString()} {DateTime.Now.ToLongDateString()}");
             W.WriteLine($"Charging station locked using RFID: {LockID}");
             W.WriteLine("-------------------------------------------------------");
+            W.Close();
         }
     }
 }

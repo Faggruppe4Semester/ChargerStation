@@ -45,10 +45,19 @@ namespace ChargerStationTest
         [Test]
         public void IDDetected_CorrectId_StateAvaliable()
         {
-            _chargerControl.IsConnected().Returns(false);
+            _chargerControl.IsConnected().Returns(true);
             _idReader.RfIdDetectedEvent += Raise.EventWith(new RfIdEventArgs { Id = 123 }); //Lås skab
             _idReader.RfIdDetectedEvent += Raise.EventWith(new RfIdEventArgs { Id = 123 }); //Forsøg at låse op
             Assert.That(_uut._state,Is.EqualTo(StationControl.LadeskabState.Available));
+        }
+
+        [Test]
+        public void IDDetected_IncorrectId_StateLocked()
+        {
+            _chargerControl.IsConnected().Returns(true);
+            _idReader.RfIdDetectedEvent += Raise.EventWith(new RfIdEventArgs { Id = 123 }); //Lås skab
+            _idReader.RfIdDetectedEvent += Raise.EventWith(new RfIdEventArgs { Id = 321 }); //Forsøg at låse op
+            Assert.That(_uut._state, Is.EqualTo(StationControl.LadeskabState.Locked));
         }
     }
 }
