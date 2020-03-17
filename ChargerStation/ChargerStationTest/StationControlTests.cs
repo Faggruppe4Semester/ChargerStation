@@ -59,5 +59,20 @@ namespace ChargerStationTest
             _idReader.RfIdDetectedEvent += Raise.EventWith(new RfIdEventArgs { Id = 321 }); //Forsøg at låse op
             Assert.That(_uut._state, Is.EqualTo(StationControl.LadeskabState.Locked));
         }
+
+        [Test]
+        public void DoorOpened_StateDoorOpened()
+        {
+            _door.DoorStateChangedEvent += Raise.EventWith(new DoorStateChangedEventArgs{State = DoorState.Open});
+            Assert.That(_uut._state,Is.EqualTo(StationControl.LadeskabState.DoorOpen));
+        }
+
+        [Test]
+        public void DoorOpened_IDreadIgnored_StateDoorOpen()
+        {
+            _door.DoorStateChangedEvent += Raise.EventWith(new DoorStateChangedEventArgs { State = DoorState.Open });
+            _idReader.RfIdDetectedEvent += Raise.EventWith(new RfIdEventArgs{Id = 123});
+            Assert.That(_uut._state, Is.EqualTo(StationControl.LadeskabState.DoorOpen));
+        }
     }
 }
