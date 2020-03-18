@@ -14,4 +14,5 @@ namespace ChargerStation
             Console.WriteLine(message);
         }
     }
+
 }

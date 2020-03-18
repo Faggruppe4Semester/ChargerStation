@@ -47,6 +47,7 @@ namespace ChargerStationTest
         {
             _chargerControl.IsConnected().Returns(true);
             _idReader.RfIdDetectedEvent += Raise.EventWith(new RfIdEventArgs { Id = 123 }); //Lås skab
+            Assert.That(_uut._state, Is.EqualTo(StationControl.LadeskabState.Locked));
             _idReader.RfIdDetectedEvent += Raise.EventWith(new RfIdEventArgs { Id = 123 }); //Forsøg at låse op
             Assert.That(_uut._state,Is.EqualTo(StationControl.LadeskabState.Available));
         }
