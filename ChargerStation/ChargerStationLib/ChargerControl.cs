@@ -43,17 +43,17 @@ namespace ChargerStation
             else if(0 < e.Current && e.Current <= 5)
             {
                 //Opladningen er tilendebragt, og USB ladningen kan frakobles. Displayet viser, at telefonen er fuldt opladet.
-                _display.DisplayMessage($"Phone is fully charged. 100%. Current current: {e.Current} mA");
+                _display.DisplayMessage("Phone is fully charged.");
             }
             else if(5 < e.Current && e.Current <= 500)
             {
                 //Opladningen foregår normalt. Displayet viser, at ladning foregår
-                _display.DisplayMessage($"Charging is in progress. Current current: {e.Current} mA");
+                _display.DisplayMessage("Charging is in progress.");
             }
             else if(e.Current > 500)
             {
                 //Der er noget galt, fx en kortslutning. USB ladningen skal straks frakobles. Displayet viser en fejlmeddelelse
-                _display.DisplayMessage($"Error. Please disconnect your phone immediately. Current current: {e.Current} mA");
+                _display.DisplayMessage("Error. Please disconnect your phone immediately.");
             }
         }
     }
