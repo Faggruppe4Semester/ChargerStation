@@ -22,10 +22,11 @@ namespace ChargerStationTest
                 };
 
         }
+
         [Test]
-        public void Test1()
+        public void NoCalls_StateIsClosed()
         {
-            Assert.True(true);
+            Assert.That(_door.State, Is.EqualTo(DoorState.Closed));
         }
 
         [Test]
@@ -43,6 +44,19 @@ namespace ChargerStationTest
             _door.DoorOpen();
             Assert.That(_door.State, Is.EqualTo(DoorState.Open));
         }
+
+        [Test]
+        public void ManyClosed_StateIsClosed()
+        {
+            _door.State = DoorState.Open;
+            _door.DoorOpen();
+            _door.DoorClosed();
+            _door.DoorOpen();
+            _door.DoorClosed();
+            Assert.That(_door.State, Is.EqualTo(DoorState.Closed));
+        }
+
+
 
 
 
