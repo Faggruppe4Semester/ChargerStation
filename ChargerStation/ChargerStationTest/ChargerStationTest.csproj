@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DoorTest.cs" />
+    <Compile Include="RFIDReaderTests.cs" />
     <Compile Include="StationControlTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
