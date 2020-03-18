@@ -45,6 +45,17 @@ namespace ChargerStationTest
             Assert.That(_door.State, Is.EqualTo(DoorState.Open));
         }
 
+        [Test]
+        public void ManyClosed_StateIsClosed()
+        {
+            _door.State = DoorState.Open;
+            _door.DoorOpen();
+            _door.DoorClosed();
+            _door.DoorOpen();
+            _door.DoorClosed();
+            Assert.That(_door.State, Is.EqualTo(DoorState.Closed));
+        }
+
 
 
 
