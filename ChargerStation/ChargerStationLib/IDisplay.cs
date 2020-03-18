@@ -14,4 +14,13 @@ namespace ChargerStation
             Console.WriteLine(message);
         }
     }
+
+    public class FakeDisplay : IDisplay
+    {
+        string content;
+        public void DisplayMessage(string message)
+        {
+            content = message;
+        }
+    }
 }
