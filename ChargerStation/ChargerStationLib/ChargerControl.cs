@@ -21,7 +21,7 @@ namespace ChargerStation
         }
         public bool IsConnected()
         {
-            return false;
+            return _usbCharger.Connected;
         }
 
         public void StartCharge()
