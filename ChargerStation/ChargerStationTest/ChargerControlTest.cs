@@ -86,6 +86,7 @@ namespace ChargerStationTest
             Assert.That(_uut.IsConnected, Is.EqualTo(false));
         }
 
+        [Test]
         public void ConnectedIsTrue_IsConnectedIsTrue()
         {
             ((FakeUsbCharger)_uc).Connected = true;
