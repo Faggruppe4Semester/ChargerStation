@@ -56,6 +56,41 @@ namespace ChargerStationTest
             Assert.That(((FakeDisplay)_dp).content, Is.EqualTo("Error. Please disconnect your phone immediately."));
         }
 
+        [Test]
+        public void CurrentIsNegative_NothingIsWritten()
+        {
+            ((FakeUsbCharger)_uc).CurrentValue = -69;
+            ((FakeUsbCharger)_uc).OnNewCurrent();
+            Assert.That(((FakeDisplay)_dp).content, Is.EqualTo(null));
+        }
+
+
+        [Test]
+        public void StartCharge_ConnectedIsTrue()
+        {
+            _uut.StartCharge();
+            Assert.That(((FakeUsbCharger)_uc).Connected, Is.EqualTo(true));
+        }
+
+        [Test]
+        public void StopCharge_ConnectedIsFalse()
+        {
+            _uut.StopCharge();
+            Assert.That(((FakeUsbCharger)_uc).Connected, Is.EqualTo(false));
+        }
+
+        [Test]
+        public void ConnectedIsFalse_IsConnectedIsFalse()
+        {
+            ((FakeUsbCharger)_uc).Connected = false;
+            Assert.That(_uut.IsConnected, Is.EqualTo(false));
+        }
+
+        public void ConnectedIsTrue_IsConnectedIsTrue()
+        {
+            ((FakeUsbCharger)_uc).Connected = true;
+            Assert.That(_uut.IsConnected, Is.EqualTo(true));
+        }
 
     }
 
@@ -78,10 +113,12 @@ namespace ChargerStationTest
 
         public void StartCharge()
         {
+            Connected = true;
         }
 
         public void StopCharge()
         {
+            Connected = false;
         }
 
         public void OnNewCurrent()
