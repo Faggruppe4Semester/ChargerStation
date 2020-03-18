@@ -61,6 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChargerControlTest.cs" />
     <Compile Include="DoorTest.cs" />
     <Compile Include="RFIDReaderTests.cs" />
     <Compile Include="StationControlTests.cs" />
