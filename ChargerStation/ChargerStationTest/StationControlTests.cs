@@ -24,6 +24,12 @@ namespace ChargerStationTest
             _uut = new StationControl(_door, _chargerControl, _idReader);
 
         }
+
+        [Test]
+        public void ZeroTest_StateAvailable()
+        {
+            Assert.That(_uut._state, Is.EqualTo(StationControl.LadeskabState.Available));
+        }
       
         [Test]
         public void IDDetected_ChargingTrue_StateLocked()
@@ -35,7 +41,7 @@ namespace ChargerStationTest
         }
 
         [Test]
-        public void IDDetected_ChargingFalse_StateAvaliable()
+        public void IDDetected_ChargingFalse_StateAvailable()
         {
             _chargerControl.IsConnected().Returns(false);
             _idReader.RfIdDetectedEvent += Raise.EventWith(new RfIdEventArgs{Id = 123});
@@ -43,7 +49,7 @@ namespace ChargerStationTest
         }
 
         [Test]
-        public void IDDetected_CorrectId_StateAvaliable()
+        public void IDDetected_CorrectId_StateAvailable()
         {
             _chargerControl.IsConnected().Returns(true);
             _idReader.RfIdDetectedEvent += Raise.EventWith(new RfIdEventArgs { Id = 123 }); //Lås skab
@@ -77,7 +83,7 @@ namespace ChargerStationTest
         }
 
         [Test]
-        public void DoorClosed_StateAvaiable()
+        public void DoorClosed_StateAvailable()
         {
             _door.DoorStateChangedEvent += Raise.EventWith(new DoorStateChangedEventArgs { State = DoorState.Closed });
             Assert.That(_uut._state,Is.EqualTo(StationControl.LadeskabState.Available));
