@@ -67,10 +67,6 @@ namespace ChargerStationTest
             Assert.That(_door.State, Is.EqualTo(DoorState.Open));
         }
 
-
-
-
-
         [Test]
         public void DoorClosed_EventStateIsClosed()
         {
