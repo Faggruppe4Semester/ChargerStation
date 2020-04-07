@@ -107,8 +107,66 @@ namespace ChargerStationTest
             _display.Received(1).DisplayMessage("Indlæs RFID");
         }
 
+        [Test]
+        public void Locked_WrongIdDetected_ErrorMessageDisplayed()
+        {
+            _chargerControl.IsConnected().Returns(true);
+            _door.DoorStateChangedEvent += Raise.EventWith(new DoorStateChangedEventArgs { State = DoorState.Open });
+            _door.DoorStateChangedEvent += Raise.EventWith(new DoorStateChangedEventArgs { State = DoorState.Closed });
 
-        //Låst: forkertID besked
-        //Låst: korrekt id besked
+            _idReader.RfIdDetectedEvent += Raise.EventWith(new RfIdEventArgs { Id = 123 });
+
+            _idReader.RfIdDetectedEvent += Raise.EventWith(new RfIdEventArgs {Id = 321});
+
+            _display.Received(1).DisplayMessage("Forkert RFID");
+        }
+
+        [Test]
+        public void Locked_CorrectIdDetected_RemovePhoneMessageDisplayed()
+        {
+            //Setup locked
+            _chargerControl.IsConnected().Returns(true);
+            _door.DoorStateChangedEvent += Raise.EventWith(new DoorStateChangedEventArgs { State = DoorState.Open });
+            _door.DoorStateChangedEvent += Raise.EventWith(new DoorStateChangedEventArgs { State = DoorState.Closed });
+
+            _idReader.RfIdDetectedEvent += Raise.EventWith(new RfIdEventArgs { Id = 123 });
+
+            //Unlock with correct ID
+            _idReader.RfIdDetectedEvent += Raise.EventWith(new RfIdEventArgs { Id = 123 });
+
+            _display.Received(1).DisplayMessage("Fjern telefon");
+        }
+
+        [Test]
+        public void Locked_CorrectIdDetected_UnlockLogged()
+        {
+            //Setup locked
+            _chargerControl.IsConnected().Returns(true);
+            _door.DoorStateChangedEvent += Raise.EventWith(new DoorStateChangedEventArgs { State = DoorState.Open });
+            _door.DoorStateChangedEvent += Raise.EventWith(new DoorStateChangedEventArgs { State = DoorState.Closed });
+
+            _idReader.RfIdDetectedEvent += Raise.EventWith(new RfIdEventArgs { Id = 123 });
+
+            //Unlock with correct ID
+            _idReader.RfIdDetectedEvent += Raise.EventWith(new RfIdEventArgs { Id = 123 });
+
+            _log.Received(1).LogDoorUnlocked(123);
+        }
+
+        [Test]
+        public void Locked_CorrectIdDetected_ChargeStopped()
+        {
+            //Setup locked
+            _chargerControl.IsConnected().Returns(true);
+            _door.DoorStateChangedEvent += Raise.EventWith(new DoorStateChangedEventArgs { State = DoorState.Open });
+            _door.DoorStateChangedEvent += Raise.EventWith(new DoorStateChangedEventArgs { State = DoorState.Closed });
+
+            _idReader.RfIdDetectedEvent += Raise.EventWith(new RfIdEventArgs { Id = 123 });
+
+            //Unlock with correct ID
+            _idReader.RfIdDetectedEvent += Raise.EventWith(new RfIdEventArgs { Id = 123 });
+
+            _chargerControl.Received(1).StopCharge();
+        }
     }
 }
