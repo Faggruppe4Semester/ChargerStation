@@ -1,4 +1,5 @@
 ﻿using ChargerStation;
+using ChargerStation.Interfaces;
 using NUnit.Framework;
 
 namespace ChargerStationTest
