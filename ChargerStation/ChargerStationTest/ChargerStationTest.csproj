@@ -64,6 +64,7 @@
     <Compile Include="ChargerControlTest.cs" />
     <Compile Include="DisplayTest.cs" />
     <Compile Include="DoorTest.cs" />
+    <Compile Include="LogFileTest.cs" />
     <Compile Include="RFIDReaderTests.cs" />
     <Compile Include="StationControlTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

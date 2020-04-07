@@ -14,7 +14,7 @@ namespace ChargerStation
             UsbChargerSimulator usbCharger = new UsbChargerSimulator();
             IChargerControl c = new ChargerControl(usbCharger, new Display());
             IRfIdReader rfid = new RfIdReader();
-            Ilog log = new LogFile();
+            Ilog log = new LogFile(new StreamWriterIsolation());
             IDisplay display = new Display();
             StationControl sc = new StationControl(door, c, rfid, log, display);
             
