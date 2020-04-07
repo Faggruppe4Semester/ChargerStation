@@ -67,10 +67,46 @@ namespace ChargerStationTest
             _chargerControl.Received(1).StartCharge();
         }
 
-        //Ikke connected besked
+        [Test]
+        public void DoorOpen_IdDetected_Ignored()
+        {
+            _chargerControl.IsConnected().Returns(true);
+            _door.DoorStateChangedEvent += Raise.EventWith(new DoorStateChangedEventArgs { State = DoorState.Open });
 
-        //Open: besked
-        //Close: besked
+            _idReader.RfIdDetectedEvent += Raise.EventWith(new RfIdEventArgs {Id = 123});
+
+            _chargerControl.Received(0).StartCharge();
+        }
+
+        [Test]
+        public void Unlocked_PhoneNotConnected_WritesErrorMessage()
+        {
+            _chargerControl.IsConnected().Returns(false);
+            _door.DoorStateChangedEvent += Raise.EventWith(new DoorStateChangedEventArgs { State = DoorState.Open });
+            _door.DoorStateChangedEvent += Raise.EventWith(new DoorStateChangedEventArgs { State = DoorState.Closed });
+
+            _idReader.RfIdDetectedEvent += Raise.EventWith(new RfIdEventArgs {Id = 123});
+
+            _display.Received(1).DisplayMessage("Tilslutningsfejl");
+        }
+
+        [Test]
+        public void Unlocked_DoorOpened_WritesConnectionMessage()
+        {
+            _door.DoorStateChangedEvent += Raise.EventWith(new DoorStateChangedEventArgs {State = DoorState.Open});
+
+            _display.Received(1).DisplayMessage("Tilslut telefon");
+        }
+
+        [Test]
+        public void DoorOpen_DoorClosed_WriteClosedMessage()
+        {
+            _door.DoorStateChangedEvent += Raise.EventWith(new DoorStateChangedEventArgs { State = DoorState.Open });
+            _door.DoorStateChangedEvent += Raise.EventWith(new DoorStateChangedEventArgs { State = DoorState.Closed });
+
+            _display.Received(1).DisplayMessage("Indlæs RFID");
+        }
+
 
         //Låst: forkertID besked
         //Låst: korrekt id besked

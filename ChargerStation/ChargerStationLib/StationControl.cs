@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using Castle.Core.Internal;
 
 namespace ChargerStation
 {
@@ -33,6 +34,7 @@ namespace ChargerStation
             _door.DoorStateChangedEvent += HandleDoorStateChangedEvent;
             _rfIdReader.RfIdDetectedEvent += HandleRfidDetectedEvent;
         }
+
 
         // Eksempel på event handler for eventet "RFID Detected" fra tilstandsdiagrammet for klassen
         private void RfidDetected(int id)
