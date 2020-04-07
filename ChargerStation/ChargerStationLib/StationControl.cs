@@ -14,7 +14,7 @@ namespace ChargerStation
             DoorOpen
         };
 
-        public LadeskabState _state;
+        private LadeskabState _state;
         private IChargerControl _chargeControl;
         private IDoor _door;
         private IDisplay _display;
@@ -22,13 +22,13 @@ namespace ChargerStation
         private Ilog _log;
         private int _oldId;
         
-        public StationControl(IDoor door, IChargerControl chargeControl, IRfIdReader rfIdReader)
+        public StationControl(IDoor door, IChargerControl chargeControl, IRfIdReader rfIdReader, Ilog log, IDisplay display)
         {
             _door = door;
             _chargeControl = chargeControl;
             _rfIdReader = rfIdReader;
-            _display = new Display();
-            _log = new LogFile();
+            _display = display;
+            _log = log;
             _state = LadeskabState.Available;
             _door.DoorStateChangedEvent += HandleDoorStateChangedEvent;
             _rfIdReader.RfIdDetectedEvent += HandleRfidDetectedEvent;

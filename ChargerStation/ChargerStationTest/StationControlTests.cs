@@ -1,7 +1,9 @@
 ﻿using System;
 using ChargerStation;
 using NSubstitute;
+using NSubstitute.ReceivedExtensions;
 using NUnit.Framework;
+using NUnit.Framework.Internal.Execution;
 
 
 namespace ChargerStationTest
@@ -13,6 +15,8 @@ namespace ChargerStationTest
         private IDoor _door;
         private IChargerControl _chargerControl;
         private IRfIdReader _idReader;
+        private Ilog _log;
+        private IDisplay _display;
 
         [SetUp]
         public void SetUp()
@@ -20,73 +24,55 @@ namespace ChargerStationTest
             _door = Substitute.For<IDoor>();
             _chargerControl = Substitute.For<IChargerControl>();
             _idReader = Substitute.For<IRfIdReader>();
+            _log = Substitute.For<Ilog>();
+            _display = Substitute.For<IDisplay>();
 
-            _uut = new StationControl(_door, _chargerControl, _idReader);
+            _uut = new StationControl(_door, _chargerControl, _idReader, _log, _display);
 
         }
 
         [Test]
-        public void ZeroTest_StateAvailable()
-        {
-            Assert.That(_uut._state, Is.EqualTo(StationControl.LadeskabState.Available));
-        }
-      
-        [Test]
-        public void IDDetected_ChargingTrue_StateLocked()
+        public void Unlocked_IdDetected_logCalled()
         {
             _chargerControl.IsConnected().Returns(true);
+            _door.DoorStateChangedEvent += Raise.EventWith(new DoorStateChangedEventArgs {State = DoorState.Open});
+            _door.DoorStateChangedEvent += Raise.EventWith(new DoorStateChangedEventArgs {State = DoorState.Closed});
+
             _idReader.RfIdDetectedEvent += Raise.EventWith(new RfIdEventArgs {Id = 123});
-            //_idReader.Detect(123);
-            Assert.That(_uut._state, Is.EqualTo(StationControl.LadeskabState.Locked));
+
+            _log.Received(1).LogDoorLocked(123);
         }
 
         [Test]
-        public void IDDetected_ChargingFalse_StateAvailable()
-        {
-            _chargerControl.IsConnected().Returns(false);
-            _idReader.RfIdDetectedEvent += Raise.EventWith(new RfIdEventArgs{Id = 123});
-            Assert.That(_uut._state,Is.EqualTo(StationControl.LadeskabState.Available));
-        }
-
-        [Test]
-        public void IDDetected_CorrectId_StateAvailable()
+        public void Unlocked_IdDetected_DisplayWritten()
         {
             _chargerControl.IsConnected().Returns(true);
-            _idReader.RfIdDetectedEvent += Raise.EventWith(new RfIdEventArgs { Id = 123 }); //Lås skab
-            Assert.That(_uut._state, Is.EqualTo(StationControl.LadeskabState.Locked));
-            _idReader.RfIdDetectedEvent += Raise.EventWith(new RfIdEventArgs { Id = 123 }); //Forsøg at låse op
-            Assert.That(_uut._state,Is.EqualTo(StationControl.LadeskabState.Available));
-        }
-
-        [Test]
-        public void IDDetected_IncorrectId_StateLocked()
-        {
-            _chargerControl.IsConnected().Returns(true);
-            _idReader.RfIdDetectedEvent += Raise.EventWith(new RfIdEventArgs { Id = 123 }); //Lås skab
-            _idReader.RfIdDetectedEvent += Raise.EventWith(new RfIdEventArgs { Id = 321 }); //Forsøg at låse op
-            Assert.That(_uut._state, Is.EqualTo(StationControl.LadeskabState.Locked));
-        }
-
-        [Test]
-        public void DoorOpened_StateDoorOpened()
-        {
-            _door.DoorStateChangedEvent += Raise.EventWith(new DoorStateChangedEventArgs{State = DoorState.Open});
-            Assert.That(_uut._state,Is.EqualTo(StationControl.LadeskabState.DoorOpen));
-        }
-
-        [Test]
-        public void DoorOpened_IDreadIgnored_StateDoorOpen()
-        {
             _door.DoorStateChangedEvent += Raise.EventWith(new DoorStateChangedEventArgs { State = DoorState.Open });
-            _idReader.RfIdDetectedEvent += Raise.EventWith(new RfIdEventArgs{Id = 123});
-            Assert.That(_uut._state, Is.EqualTo(StationControl.LadeskabState.DoorOpen));
+            _door.DoorStateChangedEvent += Raise.EventWith(new DoorStateChangedEventArgs { State = DoorState.Closed });
+
+            _idReader.RfIdDetectedEvent += Raise.EventWith(new RfIdEventArgs { Id = 123 });
+
+            _display.Received(1).DisplayMessage("Ladeskab optaget");
         }
 
         [Test]
-        public void DoorClosed_StateAvailable()
+        public void Unlocked_IdDetected_ChargeStarted()
         {
+            _chargerControl.IsConnected().Returns(true);
+            _door.DoorStateChangedEvent += Raise.EventWith(new DoorStateChangedEventArgs { State = DoorState.Open });
             _door.DoorStateChangedEvent += Raise.EventWith(new DoorStateChangedEventArgs { State = DoorState.Closed });
-            Assert.That(_uut._state,Is.EqualTo(StationControl.LadeskabState.Available));
+
+            _idReader.RfIdDetectedEvent += Raise.EventWith(new RfIdEventArgs { Id = 123 });
+
+            _chargerControl.Received(1).StartCharge();
         }
+
+        //Ikke connected besked
+
+        //Open: besked
+        //Close: besked
+
+        //Låst: forkertID besked
+        //Låst: korrekt id besked
     }
 }

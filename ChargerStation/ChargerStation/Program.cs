@@ -13,7 +13,9 @@ namespace ChargerStation
             UsbChargerSimulator usbCharger = new UsbChargerSimulator();
             IChargerControl c = new ChargerControl(usbCharger, new Display());
             IRfIdReader rfid = new RfIdReader();
-            StationControl sc = new StationControl(door, c, rfid);
+            Ilog log = new LogFile();
+            IDisplay display = new Display();
+            StationControl sc = new StationControl(door, c, rfid, log, display);
             
             Console.WriteLine("Ladeskab Tændt.");
             Console.WriteLine("Hvilken handling vil du foretage?");
