@@ -24,48 +24,60 @@ namespace ChargerStationTest
 
         }
 
-
-        [Test]
-        public void CurrentIs0_NothingIsWrittenToDisplay()
+        /* EP's
+         *  Ep1 [ Ladestrøm <= -1 mA]
+         *  Ep2 [ 0 mA]
+         *  Ep3 [1 mA <= Ladestrøm <= 5 ]
+         *  Ep4 [ 5 < Ladestrøm <= 500 ]
+         *  Ep5 [ 500 < Ladestrøm ]
+         */
+        
+        [TestCase(-1)]
+        [TestCase(-500)]
+        public void BVA_EP1_CurrentIsBelowZero_NothingIsWrittenToDisplay(int a)
         {
-            ((FakeUsbCharger)_uc).CurrentValue = 0;
+            ((FakeUsbCharger)_uc).CurrentValue = a;
             ((FakeUsbCharger)_uc).OnNewCurrent();
             Assert.That(((FakeDisplay)_dp).content, Is.EqualTo(null));
         }
 
-        [Test]
-        public void CurrentIsLow_WritePhoneIsFull()
+        [TestCase(0)]
+        public void BVA_EP2_CurrentIsZero_NothingIsWrittenToDisplay(int a)
         {
-            ((FakeUsbCharger)_uc).CurrentValue = 3;
+            ((FakeUsbCharger)_uc).CurrentValue = a;
+            ((FakeUsbCharger)_uc).OnNewCurrent();
+            Assert.That(((FakeDisplay)_dp).content, Is.EqualTo(null));
+        }
+        
+        [TestCase(1)]
+        [TestCase(3)]
+        [TestCase(5)]
+        public void BVA_EP3_CurrentIsAcceptableRangeForFullCharge_WritePhoneIsFullToDisplay(int a)
+        {
+            ((FakeUsbCharger)_uc).CurrentValue = a;
             ((FakeUsbCharger)_uc).OnNewCurrent();
             Assert.That(((FakeDisplay)_dp).content, Is.EqualTo("Phone is fully charged."));
         }
-
-        [Test]
-        public void CurrentIs250_WritePhoneIsCharging()
+        
+        [TestCase(6)]
+        [TestCase(250)]
+        [TestCase(500)]
+        public void BVA_EP4_CurrentIsAcceptableRangeForChargeInProgress_WritePhoneIsChargingToDisplay(int a)
         {
-            ((FakeUsbCharger)_uc).CurrentValue = 250;
+            ((FakeUsbCharger)_uc).CurrentValue = a;
             ((FakeUsbCharger)_uc).OnNewCurrent();
             Assert.That(((FakeDisplay)_dp).content, Is.EqualTo("Charging is in progress."));
         }
-
-        [Test]
-        public void CurrentIsOver500_WritePhoneError()
+        
+        [TestCase(501)]
+        [TestCase(1000)]
+        public void BVA_EP5_CurrentIsAbove500mA_WriteErrorToDisplay(int a)
         {
-            ((FakeUsbCharger)_uc).CurrentValue = 700;
+            ((FakeUsbCharger)_uc).CurrentValue = a;
             ((FakeUsbCharger)_uc).OnNewCurrent();
             Assert.That(((FakeDisplay)_dp).content, Is.EqualTo("Error. Please disconnect your phone immediately."));
         }
-
-        [Test]
-        public void CurrentIsNegative_NothingIsWritten()
-        {
-            ((FakeUsbCharger)_uc).CurrentValue = -69;
-            ((FakeUsbCharger)_uc).OnNewCurrent();
-            Assert.That(((FakeDisplay)_dp).content, Is.EqualTo(null));
-        }
-
-
+        
         [Test]
         public void StartCharge_ConnectedIsTrue()
         {

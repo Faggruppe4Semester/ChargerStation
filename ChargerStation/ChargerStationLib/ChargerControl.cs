@@ -31,7 +31,11 @@ namespace ChargerStation
 
         void HandleCurrentEvent(object source, CurrentEventArgs e)
         {
-            if(e.Current == 0)
+            if (e.Current < 0)
+            {
+                //Negative Current results in undefined behaviour
+            }
+                if(e.Current == 0)
             {
                 //Der er ingen forbindelse til en telefon, eller ladning er ikke startet. Displayet viser ikke noget om ladning
             }
