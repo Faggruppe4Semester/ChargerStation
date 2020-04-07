@@ -1,4 +1,5 @@
 ﻿using System;
+using ChargerStation.Interfaces;
 
 namespace ChargerStation
 {
@@ -6,13 +7,7 @@ namespace ChargerStation
     {
         public int Id { get; set; }
     }
-    
-    public interface IRfIdReader
-    {
-        event EventHandler<RfIdEventArgs> RfIdDetectedEvent;
-        void Detect(int id);
-    }
-    
+
     public class RfIdReader : IRfIdReader
     {
         public event EventHandler<RfIdEventArgs> RfIdDetectedEvent;

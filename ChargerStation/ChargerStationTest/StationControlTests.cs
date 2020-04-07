@@ -1,5 +1,6 @@
 ﻿using System;
 using ChargerStation;
+using ChargerStation.Interfaces;
 using NSubstitute;
 using NSubstitute.ReceivedExtensions;
 using NUnit.Framework;
@@ -34,10 +35,12 @@ namespace ChargerStationTest
         [Test]
         public void Unlocked_IdDetected_logCalled()
         {
+            //setting up with placing the phone
             _chargerControl.IsConnected().Returns(true);
             _door.DoorStateChangedEvent += Raise.EventWith(new DoorStateChangedEventArgs {State = DoorState.Open});
             _door.DoorStateChangedEvent += Raise.EventWith(new DoorStateChangedEventArgs {State = DoorState.Closed});
 
+            //Scanning an ID
             _idReader.RfIdDetectedEvent += Raise.EventWith(new RfIdEventArgs {Id = 123});
 
             _log.Received(1).LogDoorLocked(123);
@@ -46,10 +49,12 @@ namespace ChargerStationTest
         [Test]
         public void Unlocked_IdDetected_DisplayWritten()
         {
+            //setting up with placing the phone
             _chargerControl.IsConnected().Returns(true);
             _door.DoorStateChangedEvent += Raise.EventWith(new DoorStateChangedEventArgs { State = DoorState.Open });
             _door.DoorStateChangedEvent += Raise.EventWith(new DoorStateChangedEventArgs { State = DoorState.Closed });
 
+            //Scanning an ID
             _idReader.RfIdDetectedEvent += Raise.EventWith(new RfIdEventArgs { Id = 123 });
 
             _display.Received(1).DisplayMessage("Ladeskab optaget");
@@ -58,10 +63,12 @@ namespace ChargerStationTest
         [Test]
         public void Unlocked_IdDetected_ChargeStarted()
         {
+            //setting up with placing the phone
             _chargerControl.IsConnected().Returns(true);
             _door.DoorStateChangedEvent += Raise.EventWith(new DoorStateChangedEventArgs { State = DoorState.Open });
             _door.DoorStateChangedEvent += Raise.EventWith(new DoorStateChangedEventArgs { State = DoorState.Closed });
 
+            //Scanning an ID
             _idReader.RfIdDetectedEvent += Raise.EventWith(new RfIdEventArgs { Id = 123 });
 
             _chargerControl.Received(1).StartCharge();
@@ -70,6 +77,7 @@ namespace ChargerStationTest
         [Test]
         public void DoorOpen_IdDetected_Ignored()
         {
+            //Setting up but not closing the door
             _chargerControl.IsConnected().Returns(true);
             _door.DoorStateChangedEvent += Raise.EventWith(new DoorStateChangedEventArgs { State = DoorState.Open });
 
@@ -81,6 +89,7 @@ namespace ChargerStationTest
         [Test]
         public void Unlocked_PhoneNotConnected_WritesErrorMessage()
         {
+            //Settingup with phone not connected
             _chargerControl.IsConnected().Returns(false);
             _door.DoorStateChangedEvent += Raise.EventWith(new DoorStateChangedEventArgs { State = DoorState.Open });
             _door.DoorStateChangedEvent += Raise.EventWith(new DoorStateChangedEventArgs { State = DoorState.Closed });
@@ -110,12 +119,14 @@ namespace ChargerStationTest
         [Test]
         public void Locked_WrongIdDetected_ErrorMessageDisplayed()
         {
+            //setting up for locked
             _chargerControl.IsConnected().Returns(true);
             _door.DoorStateChangedEvent += Raise.EventWith(new DoorStateChangedEventArgs { State = DoorState.Open });
             _door.DoorStateChangedEvent += Raise.EventWith(new DoorStateChangedEventArgs { State = DoorState.Closed });
 
             _idReader.RfIdDetectedEvent += Raise.EventWith(new RfIdEventArgs { Id = 123 });
 
+            //Scanning false ID
             _idReader.RfIdDetectedEvent += Raise.EventWith(new RfIdEventArgs {Id = 321});
 
             _display.Received(1).DisplayMessage("Forkert RFID");

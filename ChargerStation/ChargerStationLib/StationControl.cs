@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using Castle.Core.Internal;
+using ChargerStation.Interfaces;
 
 namespace ChargerStation
 {

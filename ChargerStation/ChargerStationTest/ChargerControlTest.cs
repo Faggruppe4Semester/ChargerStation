@@ -1,5 +1,6 @@
 ﻿using System;
 using ChargerStation;
+using ChargerStation.Interfaces;
 using NSubstitute;
 using NUnit.Framework;
 using UsbSimulator;

@@ -1,4 +1,5 @@
 ﻿using System;
+using ChargerStation.Interfaces;
 using UsbSimulator;
 
 namespace ChargerStation

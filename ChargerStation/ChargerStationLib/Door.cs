@@ -1,4 +1,5 @@
 ﻿using System;
+using ChargerStation.Interfaces;
 
 namespace ChargerStation
 {
@@ -6,14 +7,7 @@ namespace ChargerStation
     {
         Closed,Open
     }
-    public interface IDoor
-    {
-        DoorState State { get; set; }
-        event EventHandler<DoorStateChangedEventArgs> DoorStateChangedEvent; 
-        void DoorClosed();
-        void DoorOpen();
-    }
-    
+
     public class Door : IDoor
     {
         public DoorState State { get; set; }
